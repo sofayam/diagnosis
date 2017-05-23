@@ -10,16 +10,12 @@ function createPatient() {
     return new Patient({
         name: "bob", fever: "high",
         spots: false, rash: true,
-        soreThroat: false, innoculated: true
+        soreThroat: true, innoculated: true
     }
     )
 }
 
 var session = flow.getSession()
-
-var d, t;
-
-var resultsContainer = []
 
 
 
@@ -32,5 +28,7 @@ session.matchUntilHalt().then(
     }  
 )
 
-session.assert(createPatient())
+var pat = createPatient()
+
+session.assert(pat)
       
