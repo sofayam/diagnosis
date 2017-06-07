@@ -9,7 +9,7 @@ var Patient = flow.getDefined("Patient")
 function createPatient() {
     return new Patient({
         name: "bob", fever: "high",
-        spots: false, rash: true,
+        spots: false, rash: false,
         soreThroat: true, innoculated: true
     }
     )
@@ -31,4 +31,8 @@ session.matchUntilHalt().then(
 var pat = createPatient()
 
 session.assert(pat)
+
+session.on("fire", function (x) {
+   console.log("Fired ", x.toString())
+} )
       

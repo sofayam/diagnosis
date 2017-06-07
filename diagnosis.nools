@@ -23,18 +23,6 @@ define Treatment {
 }
 
 
-rule Cold {
-    when {
-        p : Patient p.fever in ['mild', 'high'] {name : n};
-        not(d : Diagnosis d.name == n && d.diagnosis == 'flu');
-    }
-    then {
-        var d = new Diagnosis({name : n, diagnosis : "cold"});
-        emit("diagnosis", d);
-        assert(d);
-    }
-}
-
 rule Measels {
     when {
         p : Patient p.fever == 'high' && p.spots == true && p.innoculated == true {name : n};
@@ -71,6 +59,7 @@ rule Allergy2 {
 }
 
 rule Flu {
+    //salience: 10;
     when {
         p : Patient p.soreThroat == true && p.fever in ['mild', 'high'] {name : n};
     }
@@ -80,6 +69,22 @@ rule Flu {
         assert(d);
     }
 }
+
+rule Cold {
+    //salience: 9;
+    when {
+        p : Patient p.fever in ['mild', 'high'] {name : n};
+        not(d : Diagnosis d.name == n && d.diagnosis == 'flu');
+    }
+    then {
+        var d = new Diagnosis({name : n, diagnosis : "cold"});
+        emit("diagnosis", d);
+        assert(d);
+    }
+}
+
+
+
 
 rule Healthy {
     when {
@@ -135,4 +140,24 @@ rule BedRest {
         emit("treatment", t);
         assert(t);
     }
+}
+
+rule TellMeDiagnosis {
+    when {
+        d: Diagnosis // d.name == "bob"
+    }
+    then {
+        console.log("Diagnosis " + d.diagnosis + " for " + d.name)
+    }
+}
+
+rule TellMeTreatment {
+    when {
+        t: Treatment // t.name == "bob"
+    }
+    then {
+        console.log("Treatment " + t.treatment + " for " + t.name);
+        //halt();
+    }
+ 
 }
