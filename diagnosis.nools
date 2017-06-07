@@ -64,8 +64,10 @@ rule Flu {
         p : Patient p.soreThroat == true && p.fever in ['mild', 'high'] {name : n};
     }
     then {
+        emit("bloop");
         var d = new Diagnosis({name : n, diagnosis : "flu"});
         emit("diagnosis", d);
+
         assert(d);
     }
 }
@@ -153,9 +155,10 @@ rule TellMeDiagnosis {
 
 rule TellMeTreatment {
     when {
-        t: Treatment // t.name == "bob"
+        t: Treatment  // t.name == "bob"
     }
     then {
+        emit("bloop");
         console.log("Treatment " + t.treatment + " for " + t.name);
         //halt();
     }

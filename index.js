@@ -32,7 +32,12 @@ var pat = createPatient()
 
 session.assert(pat)
 
-session.on("fire", function (x) {
-   console.log("Fired ", x.toString())
-} )
+//session.on("fire", function (x) {
+//   console.log("Fired ", x.toString())
+//} )
+
+session.on("bloop", function(x) {
+    console.log("custom event bloop emitted")
+}
+)
       
